@@ -31,11 +31,7 @@ fun Context.startNewUpload(
         putExtra(taskNotificationConfig, notificationConfig)
     }
 
-    if (Build.VERSION.SDK_INT >= 26) {
-        startForegroundService(intent)
-    } else {
-        startService(intent)
-    }
+    startService(intent)
 
     return params.id
 }
