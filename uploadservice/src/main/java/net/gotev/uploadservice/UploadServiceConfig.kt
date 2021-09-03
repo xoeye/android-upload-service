@@ -36,6 +36,7 @@ object UploadServiceConfig {
 
     private const val fileScheme = "/"
     private const val contentScheme = "content://"
+    private const val notificationChannel = "BackgroundUploadChannel"
 
     /**
      * Default User Agent used by default Http Stack constructors.
@@ -58,8 +59,8 @@ object UploadServiceConfig {
      */
     @JvmStatic
     fun initialize(context: Application, defaultNotificationChannel: String, debug: Boolean) {
-        this.namespace = context.packageName
-        this.defaultNotificationChannel = defaultNotificationChannel
+        this.namespace = if (context.packageName === null) "" else context.packageName
+        this.defaultNotificationChannel =  if (defaultNotificationChannel === null) "" else notificationChannel
         UploadServiceLogger.setDevelopmentMode(debug)
     }
 
@@ -68,7 +69,7 @@ object UploadServiceConfig {
      * subclass onCreate method before anything else.
      */
     @JvmStatic
-    var namespace: String? = null
+    var namespace: String? = ""
         private set
         get() = if (field == null)
             throw IllegalArgumentException("You have to set namespace to your app package name (context.packageName) in your Application subclass")
@@ -80,7 +81,7 @@ object UploadServiceConfig {
      * subclass onCreate method before anything else.
      */
     @JvmStatic
-    var defaultNotificationChannel: String? = null
+    var defaultNotificationChannel: String? = notificationChannel
         private set
         get() = if (field == null)
             throw IllegalArgumentException("You have to set defaultNotificationChannel in your Application subclass")
