@@ -32,3 +32,4 @@ npm-debug.log
 javadoc
 uploadservice-demo-debug.apk
 .project
+.settings/
